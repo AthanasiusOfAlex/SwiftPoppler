@@ -1,37 +1,39 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.9
 
 import PackageDescription
 
 let package = Package(
-    name: "Poppler",
-    platforms: [ .macOS(.v12) ],
+    name: "SwiftPoppler",
+    platforms: [
+        .macOS(.v13)
+    ],
     products: [
         .library(
-            name: "Poppler",
-            targets: ["Poppler"]
-        ),
+            name: "SwiftPoppler",
+            targets: ["SwiftPoppler"]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-argument-parser.git", branch: "main")
     ],
     targets: [
         .systemLibrary(
-            name: "CxxLibrary",
+            name: "CxxPoppler",
             pkgConfig: "poppler-cpp",
             providers: [ .brew([ "poppler" ]) ]
         ),
         .target(
-            name: "CWrapper",
-            dependencies: [ "CxxLibrary" ],
-            cSettings: [
-                .unsafeFlags([
-                    "-fcxx-modules"     // needed to allow C++ modules
-                ])]
+            name: "SwiftPoppler",
+            dependencies: ["CxxPoppler"],
+            swiftSettings: [.interoperabilityMode(.Cxx)]
         ),
-        .target(
-            name: "Poppler",
-            dependencies: [ "CWrapper" ]
-        ),
-        .testTarget(
-            name: "PopplerTests",
-            dependencies: ["Poppler"]),
-    ],
-    cxxLanguageStandard: .cxx20
+        .executableTarget(
+            name: "poppler-tool",
+            dependencies: [
+                "SwiftPoppler",
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ],
+            swiftSettings: [.interoperabilityMode(.Cxx)]
+        )
+    ]
 )

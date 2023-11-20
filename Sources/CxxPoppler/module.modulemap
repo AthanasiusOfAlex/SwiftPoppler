@@ -1,0 +1,5 @@
+module CxxPoppler [system] {
+  umbrella header "CxxPoppler.h"
+  link "poppler-cpp"
+  export *
+}

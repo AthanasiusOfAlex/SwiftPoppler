@@ -1,5 +1,0 @@
-module CxxLibrary [system] {
-  umbrella header "CxxLibrary.h"
-  link "poppler-cpp"
-  export *
-}
