@@ -2,13 +2,20 @@
 
 A Swift interface to the Poppler library.
 
-Right now the _only_ thing it does is return the version number
-and the number of pages of a PDF file.
+Right now the functionality is quite limited.
 
-    let version = getVersionString()  // 22.05.0
+    import SwiftPoppler
+    
+    print("Poppler version: \(LibraryInfo.version)")
+    print("Major version: \(LibraryInfo.Version.major)")
+    print("Minor version: \(LibraryInfo.Version.minor)")
+    print("Micro version: \(LibraryInfo.Version.micro)")
 
-    if let document = Document(fileName: "foo.pdf") {
-        print(document.pages)
-    } else {
-        print("PDF was missing or invalid")
+    do {
+        let pdfURL = URL(filePath: pdfFile)
+        let pdfDocument = try Document(url: pdfURL)
+        print("The number of pages in '\(pdfURL.lastPathComponent)' is \(pdfDocument.count).")
+        _ = pdfDocument.embeddedFiles.map { print("Size of file: \($0.size)") }
+    } catch {
+        print(error.localizedDescription)
     }

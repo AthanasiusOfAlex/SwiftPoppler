@@ -21,12 +21,12 @@ public class Document {
     
     /// Creates a new Document object based on the given path.
     ///
-    /// Returns `nil` if the file is missing or is not a PDF file.
+    /// Throws `SwiftPopplerError.badPDFFile` if the file is not found or cannot be read.
     ///
-    /// - Parameter filePath: the path to the PDF file
-    public init? (filePath: String) {
-        guard let documentPointer = getPDFDocument(filePath) else {
-            return nil
+    /// - Parameter URL: the URL to the PDF file
+    public init (url: URL) throws {
+        guard let documentPointer = getPDFDocument(url.path()) else {
+            throw SwiftPopplerError.badPDFFile(url: url)
         }
         _documentPointer = documentPointer
         _listOfFilePointers = Array<UnsafeMutableRawPointer?>(getEmbeddedFilesList(_documentPointer))
@@ -50,10 +50,10 @@ public class Document {
 extension Document {
     /// Creates a new Document object based on the given URL.
     ///
-    /// Returns `nil` if the file is missing or is not a PDF file.
+    /// Throws `SwiftPopplerError.badPDFFile` if the file is not found or cannot be read.
     ///
-    /// - Parameter URL: the URL to the PDF file
-    public convenience init? (URL url: URL) {
-        self.init(filePath: url.path())
+    /// - Parameter filePath: the path to the PDF file
+    public convenience init? (filePath: String) throws {
+        try self.init(url: URL(filePath: filePath))
     }
 }
