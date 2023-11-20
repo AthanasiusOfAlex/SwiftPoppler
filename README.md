@@ -1,4 +1,4 @@
-# Poppler
+# SwiftPoppler
 
 A Swift interface to the Poppler library.
 
