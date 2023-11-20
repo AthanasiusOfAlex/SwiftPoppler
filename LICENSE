@@ -19,3 +19,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+Note: My code is licensed with the MIT license, which is compatible with all
+versions of the GPL. However, the Poppler library is licenced with GPL 2 or
+GPL 3. Thus, if you intend to use this code to link to the Poppler library,
+it must retain a license compatible with either license, and the work as a
+whole must be licensed under one of those two versions or, like Poppler, as
+either version 2 or version 3. You are free to copy and paste my own code
+(say, if you want to use it to interact with a different C++ library, even
+one that is incompatible with the GPL) and modify it under the terms of the
+MIT license.
